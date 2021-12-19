@@ -1,0 +1,4 @@
+build --enable_runfiles
+build --symlink_prefix=/
+common --experimental_enable_bzlmod
+common --registry=https://raw.githubusercontent.com/aspect-build/bazel-central-registry/f7eb532/
