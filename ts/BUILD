@@ -1,11 +1,21 @@
-load("@aspect_rules_swc//swc:swc.bzl", "swc")
+load("@aspect_rules_swc//swc:swc.bzl", "swc_rule")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
 # Runs `swc in.ts > ../../bazel-bin/examples/simple/in.js`
 # You can run `bazel build --subcommands //examples/simple:transpile`
 # to see the exact command line Bazel runs.
 # Note that by default, sources are found by glob(["**/*.ts"])
-swc(name = "transpile")
+ts_project(
+    name = "ts",
+    transpiler = swc_rule,
+    srcs = ["in.ts"],
+    tsconfig = {
+        "compilerOptions": {
+            "declaration": True,
+        },
+    },
+)
 
 # Assert that the output of "transpile" rule matches the expected file.
 diff_test(
