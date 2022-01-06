@@ -3,13 +3,15 @@ load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
 # Runs `swc in.ts > ../../bazel-bin/examples/simple/in.js`
-# You can run `bazel build --subcommands //examples/simple:transpile`
+# You can run `bazel build --subcommands //examples/ts`
 # to see the exact command line Bazel runs.
 # Note that by default, sources are found by glob(["**/*.ts"])
+#
+# To prove that type-checking isn't in the critical path, try
+# introducing a type error in in.ts, then build this target.
 ts_project(
     name = "ts",
     transpiler = swc_rule,
-    srcs = ["in.ts"],
     tsconfig = {
         "compilerOptions": {
             "declaration": True,
