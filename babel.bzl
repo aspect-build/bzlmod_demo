@@ -20,9 +20,11 @@ def babel(name, srcs, js_outs, map_outs, **kwargs):
             "$(location %s)" % js_outs[idx],
         ]
         outs = [js_outs[idx]]
+
         if len(map_outs) > 0:
             args.append("--source-maps")
             outs.append(map_outs[idx])
+
         babel_cli(
             name = "{}_{}".format(name, idx),
             data = [

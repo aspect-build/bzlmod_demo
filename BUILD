@@ -1,5 +1,6 @@
 load("@aspect_rules_swc//swc:swc.bzl", swc = "swc_rule")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@bazel_skylib//lib:partial.bzl", "partial")
 load("babel.bzl", "babel")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
@@ -40,7 +41,12 @@ ts_project(
 # INFO: Elapsed time: 3.330s, Critical Path: 3.19s
 ts_project(
     name = "swc",
-    transpiler = swc,
+    # Partial allows us to make a higher-order function
+    # See https://docs.aspect.dev/bazelbuild/bazel-skylib/1.1.1/docs/partial.html
+    transpiler = partial.make(swc, 
+        # Additional attributes to the swc rule can appear here
+        args = ["--env-name=test"],
+    ),
     srcs = ["big.ts"],
     out_dir = "build-swc",
     tsconfig = _TSCONFIG,
