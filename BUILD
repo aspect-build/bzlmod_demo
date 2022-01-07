@@ -16,6 +16,7 @@ write_file(
 _TSCONFIG = {
     "compilerOptions": {
         "declaration": True,
+        "sourceMap": True,
     },
 }
 
