@@ -41,10 +41,12 @@ ts_project(
 # INFO: Elapsed time: 3.330s, Critical Path: 3.19s
 ts_project(
     name = "swc",
-    # Partial allows us to make a higher-order function
-    # See https://docs.aspect.dev/bazelbuild/bazel-skylib/1.1.1/docs/partial.html
-    transpiler = partial.make(swc, 
-        # Additional attributes to the swc rule can appear here
+    # Partial allows us to apply some arguments here, while ts_project applies the rest.
+    # See https://en.wikipedia.org/wiki/Partial_application
+    # and https://docs.aspect.dev/bazelbuild/bazel-skylib/1.1.1/docs/partial.html
+    transpiler = partial.make(
+        swc, 
+        # Attributes to the swc rule can appear here
         args = ["--env-name=test"],
     ),
     srcs = ["big.ts"],
